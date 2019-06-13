@@ -1,0 +1,3 @@
+[submodule "authentication_client"]
+	path = authentication_client
+	url = https://github.com/afsan007/authentication_client.git
