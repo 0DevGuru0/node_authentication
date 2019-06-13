@@ -1,0 +1,175 @@
+<link href="/css/profile.css" rel="stylesheet">
+
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#"><img src="/images/logo.png" width="40px"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/users/manage">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/logout">Logout</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">HOME</a>
+        </li>
+      </ul>
+      <form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+</header>
+<br/>
+{{#if errors}}
+  <div class="erroralert" style="margin-top:1pc;">
+  <span><strong>Alert:</strong></aspan>||
+  {{#each errors}}
+    {{msg}} ||
+  {{/each}}
+</div>
+{{/if}}
+{{#if error_msg}}
+<div class="erroralert" style="margin-top:1pc;">
+<span><strong>Alert:</strong></aspan>
+    {{error_msg}}
+</div>
+{{/if}}
+{{#if error_email}}
+<div class="erroralert" style="margin-top:1pc;">
+<span><strong>Alert:</strong></aspan>
+    {{error_email}}
+</div>
+{{/if}}
+<div class="center">
+  <h1 class="editproh1">Edit Profile Form</h1>
+ {{#user}}
+  <form action="/users/editprofile" method="post" enctype="multipart/form-data" class="editproform">
+    <!-- first_name && last_name -->
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">first name</label>
+        <input type="text" class="form-control" value="{{first_name}}" minlength="3" placeholder="firstname" name="first_name" required>
+        <small style="color:#665c5c;">* minimum length 3 .</small>
+
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4">last name</label>
+        <input type="text" class="form-control" value="{{last_name}}" minlength="3" placeholder="lastname" name="last_name" required>
+        <small style="color:#665c5c;">* minimum length 3 .</small>
+
+      </div>
+    </div>
+        
+    <!-- Email && Username -->
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Email</label>
+        <input type="email" class="form-control" id="inputEmail4" value="{{email}}" placeholder="Email" name="email" required>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" placeholder="username" minlength="3" value="{{username}}" name="username" required>
+        <small style="color:#665c5c;">* minimum length 3 .</small>
+      </div>
+    </div>
+    
+    <!-- Address && Aboutme --> 
+    {{#each profileInfo}} 
+    <div class="form-group">
+      <label for="inputAddress">Address</label>
+      <input type="text" class="form-control" value="{{address}}"id="inputAddress" placeholder="1234 Main St" name="address"></input>
+    </div>
+    <div class="form-group">
+      <label for="inputAddress">About Me</label>
+      <textarea class="form-control" placeholder="Explain About Your Self..." name="aboutme">{{aboutme}}</textarea>
+    </div>
+    {{else}}
+    <div class="form-group">
+      <label for="inputAddress">Address</label>
+      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="address"></input>
+    </div>
+    <div class="form-group">
+      <label for="inputAddress">About Me</label>
+      <textarea class="form-control" placeholder="Explain About Your Self..." name="aboutme"></textarea>
+    </div>
+    {{/each}}
+    <!-- profileImage && Gender -->
+    <div class="form-row">
+     <div class="form-group col-md-6">
+        <label for="inputAddress">Profile Image</label>
+        <input type="file" accept="image/*" class="form-control" name="Image" onchange="ValidateSingleInput(this);">
+        <small style="color:#665c5c;">* maximum image size is 3mb.</small>
+      </div>  
+     <div class="form-group col-md-6">
+       <div class="input-group mb-3" style="margin-top: 33px;">
+          <div class="input-group-prepend">
+           <label class="input-group-text" for="inputGroupSelect01">Gender</label>
+          </div>
+          
+          <select name="gender" class="custom-select">
+            <option selected>{{gender}}</option>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+          </select>
+       </div>
+      </div>
+    </div>
+    
+    <!-- City && User Degree && Brithday -->
+    {{#each profileInfo}}
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputCity">City</label>
+        <input type="text" class="form-control" id="inputCity" name="city" value="{{city}}">
+      </div>
+      {{else}}
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputCity">City</label>
+          <input type="text" class="form-control" id="inputCity" name="city">
+        </div>
+        {{/each}}
+      {{#each tokens}}
+      <div class="form-group col-md-4">
+        <label for="inputCity">User Degree</label>
+        <input type="text" class="form-control" value="{{access}}" name="SimpleUser" readonly>
+      </div>
+      {{/each}}
+      {{#each profileInfo}}
+      <div class="form-group col-md-4">
+        <label for="inputCity">Brithday</label>
+        <input type="date" class="form-control" name="Brithday" value="{{brithday}}">
+      </div> 
+      {{else}}
+      <div class="form-group col-md-4">
+        <label for="inputCity">Brithday</label>
+        <input type="date" class="form-control" name="Brithday">
+      </div> 
+    {{/each}}
+    </div>
+    
+    <!-- NewPassword && ConfirmPassword -->
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>newPassword</label>
+        <input type="password" class="form-control" id="inputPassword4" minlength="5" placeholder="newPassword" name="password">
+        <small style="color:#665c5c;">* minimum length 5 .</small>
+      </div>
+      <div class="form-group col-md-6">
+        <label>Confirm Password</label>
+        <input type="password" class="form-control" id="inputPassword4" minlength="5" placeholder="type your password again" name="password2">
+        <small style="color:#665c5c;">* minimum length 5 .</small>
+      </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Send</button>
+    
+  </form>
+ {{/user}}
+</div>
