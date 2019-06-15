@@ -1,3 +1,6 @@
 [submodule "Redis"]
 	path = Redis
 	url = https://github.com/afsan007/Redis
+[submodule "multi-docker"]
+	path = multi-docker
+	url = https://github.com/afsan007/multi-docker.git
