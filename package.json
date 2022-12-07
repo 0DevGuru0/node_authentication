@@ -8,7 +8,7 @@
   "dependencies": {
     "async": "*",
     "bcryptjs": "*",
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.1",
     "connect-flash": "*",
     "cookie-parser": "*",
     "debug": "*",
